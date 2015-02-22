@@ -1,0 +1,28 @@
+# Ensures we have a swapfile active
+- name: Create swap space
+  command: dd if=/dev/zero of=/swapfile bs=1024 count=2048k
+  when: ansible_swaptotal_mb < 1
+
+- name: Make swap
+  command: mkswap /swapfile
+  when: ansible_swaptotal_mb < 1
+
+- name: Add to fstab
+  action: lineinfile dest=/etc/fstab regexp="/swapfile none swap sw 0 0" line="/swapfile none swap sw 0 0" state=present
+  when: ansible_swaptotal_mb < 1
+
+- name: Ensure correct swappines in /etc/sysctl.conf
+  action: lineinfile dest=/etc/sysctl.conf regexp="vm.swappiness = 10" line="vm.swappiness = 10" state=present
+  when: ansible_swaptotal_mb < 1
+
+- name: Set swapiness
+  shell: echo 0 | tee /proc/sys/vm/swappiness
+  when: ansible_swaptotal_mb < 1
+
+- name: Set right ownership on /swapfile
+  shell: chown root:root /swapfile && chmod 0600 /swapfile
+  when: ansible_swaptotal_mb < 1
+
+- name: Turn swap on
+  command: swapon -a
+  when: ansible_swaptotal_mb < 1

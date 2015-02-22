@@ -1,0 +1,61 @@
+---
+- name: apt-get update
+  apt: update_cache=yes
+
+- name: Install ansible apt deps
+  apt: name={{ item }} state=installed
+  with_items:
+    - python-apt
+    - aptitude
+
+- name: apt-get dist-upgrade
+  apt: upgrade=dist
+  when: os_release.stdout.find('jessie/sid') == -1
+
+- name: Install necessities and nice-to-haves
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - sudo
+    - vim
+    - htop
+    - iftop
+    - iotop
+    - zsh
+    - git
+    - screen
+    - build-essential
+    - apticron
+    - update-notifier-common
+    - debian-goodies
+    - apt-transport-https
+    - python-software-properties
+    - python-pycurl
+    - ack-grep
+    - dnsutils
+    - python-psycopg2
+    - libpq-dev
+    - python-dev
+    - kexec-tools
+    - python-passlib
+    - util-linux
+
+- name: Install PIL reqs
+  apt: name={{ item }} state=installed
+  with_items:
+    - libjpeg8-dev
+    - zlib1g-dev
+    - libtiff4-dev
+    - libfreetype6-dev
+    - liblcms2-dev
+    - libwebp-dev
+    - libtk-img-dev
+
+- name: Ensure net.ipv4.ip_forward in /etc/sysctl.conf
+  action: lineinfile dest=/etc/sysctl.conf regexp="net.ipv4.ip_forward = 1" line="net.ipv4.ip_forward = 1" state=present
+
+- name: Apticron email configuration
+  template: src=apticron.conf.j2 dest=/etc/apticron/apticron.conf
+
+- include: security.yml tags=security
+- include: ntp.yml tags=ntp
+- include: swap.yml tags=swap
