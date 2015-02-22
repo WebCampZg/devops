@@ -4,6 +4,10 @@
 # This is a reference of all the variables.
 ###############################################################################
 
+
+friendly_networks:
+  - ""
+
 dbname: webcampdb
 dbuser: webcamp
 dbpassword: CHANGETHIS

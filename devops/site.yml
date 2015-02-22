@@ -16,4 +16,5 @@
     - { role: common, tags: ["common"] }
     - { role: nginx, tags: ["nginx"] }
     - { role: postgres, tags: ["postgres"] }
+    - { role: web, tags: ["web"] }
 

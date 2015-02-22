@@ -1,0 +1,16 @@
+server {
+  listen 80;
+  server_name 2015.webcampzg.org;
+
+  access_log /var/log/nginx/2015.webcampzg.org-access.log;
+  error_log /var/log/nginx/2015.webcampgzg.org-error.log;
+
+  keepalive_timeout   70;
+  ssl_session_timeout 5m;
+
+  location / {
+    root /home/webcamp/web/2015/;
+  }
+
+}
+

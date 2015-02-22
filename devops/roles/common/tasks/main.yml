@@ -8,10 +8,6 @@
     - python-apt
     - aptitude
 
-- name: apt-get dist-upgrade
-  apt: upgrade=dist
-  when: os_release.stdout.find('jessie/sid') == -1
-
 - name: Install necessities and nice-to-haves
   apt: pkg={{ item }} state=installed
   with_items:

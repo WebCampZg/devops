@@ -1,0 +1,6 @@
+---
+- name: Create web folder
+  file: path=/home/webcamp/web state=directory owner=webcamp group=webcamp mode=0755
+
+- include: static.yml tags=static
+
