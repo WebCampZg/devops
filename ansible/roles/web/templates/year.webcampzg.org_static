@@ -3,7 +3,7 @@ server {
   server_name {{ item }}.webcampzg.org;
 
   access_log /var/log/nginx/{{ item }}.webcampzg.org-access.log;
-  error_log /var/log/nginx/{{ item }}.webcampgzg.org-error.log;
+  error_log /var/log/nginx/{{ item }}.webcampzg.org-error.log;
 
   keepalive_timeout   70;
   ssl_session_timeout 5m;
