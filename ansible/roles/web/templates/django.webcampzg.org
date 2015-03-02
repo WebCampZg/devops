@@ -1,0 +1,38 @@
+server {
+  listen 80;
+  server_name {{ current_year }}.webcampzg.org;
+
+  access_log /var/log/nginx/{{ current_year }}.webcampzg.org-access.log;
+  error_log /var/log/nginx/{{ current_year }}.webcampzg.org-error.log;
+
+  keepalive_timeout   70;
+  ssl_session_timeout 5m;
+
+  #django specific media static files
+  location /static/ {
+    # if asset versioning is used
+    if ($query_string) {
+        expires max;
+    }
+    root /home/webcamp/web/conference-web/project;
+  }
+
+
+  #django specific media static files
+  location /media/ {
+    # if asset versioning is used
+    if ($query_string) {
+        expires max;
+    }
+    root /home/webcamp/web/conference-web/project;
+  }
+
+
+  location / {
+    proxy_pass http://localhost:8000;
+    proxy_set_header REMOTE_ADDR $remote_addr;
+    proxy_set_header HOST $host;
+  }
+
+}
+

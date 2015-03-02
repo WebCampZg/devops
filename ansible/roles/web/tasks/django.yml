@@ -1,0 +1,55 @@
+---
+- name: Install Pip
+  apt: pkg=python-pip state=installed
+
+- name: Install Virtualenv
+  apt: pkg=python-virtualenv state=installed
+
+- name: Create empty Virtualenv for dev
+  shell: virtualenv "/home/webcamp/web/env"
+
+- name: Checkout conference web
+  git: repo=https://github.com/WebCampZg/conference-web dest=/home/webcamp/web/conference-web update=yes
+  notify:
+      - restart conference-web
+
+- name: Install pip requirements into Virtualenv
+  pip: >
+    virtualenv='/home/webcamp/web/env'
+    requirements='/home/webcamp/web/conference-web/requirements/prod.txt'
+  notify:
+      - restart conference-web
+
+- name: Copy over prod settings
+  template: src=prod.py dest=/home/webcamp/web/conference-web/project/settings/prod.py owner=webcamp group=webcamp
+
+- name: Make sure to create log dir
+  file: path=/var/log/conference-web state=directory owner=webcamp group=webcamp
+
+- name: Copy over gunicorn config
+  copy: src=gunicorn_config.py dest=/home/webcamp/web/conference-web owner=webcamp group=webcamp
+
+- name: Make sure everything in home dir has correct ownership
+  shell: chown webcamp /home/webcamp -R
+
+- name: Copy over upstart script
+  template: src=conference-web.upstart dest=/etc/init/conference-web.conf
+
+- name: Run migrations
+  shell: >
+      chdir=/home/webcamp/web/conference-web
+      /home/webcamp/web/env/bin/python manage.py migrate --settings=project.settings --noinput
+
+- name: Collect static
+  shell: >
+      chdir=/home/webcamp/web/conference-web
+      /home/webcamp/web/env/bin/python manage.py collectstatic --settings=project.settings --noinput
+
+- name: Copy over nginx vhost file for conference web
+  template: src=django.webcampzg.org dest=/etc/nginx/sites-available/{{ current_year }}.webcampzg.org
+
+- name: Enable domain vhost file for conference web
+  file: src=/etc/nginx/sites-available/{{ current_year }}.webcampzg.org dest=/etc/nginx/sites-enabled/{{ current_year }}.webcampzg.org state=link
+  notify:
+    - restart nginx
+

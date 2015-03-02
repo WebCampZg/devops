@@ -1,0 +1,15 @@
+description "Conference Web Django Site"
+
+start on (filesystem)
+stop on runlevel [016]
+
+console log
+setuid webcamp
+setgid webcamp
+chdir /home/webcamp/web/conference-web
+
+respawn
+respawn limit 3 30
+
+exec /home/webcamp/web/env/bin/gunicorn -c /home/webcamp/web/conference-web/gunicorn_config.py project.wsgi:application
+

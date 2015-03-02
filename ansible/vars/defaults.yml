@@ -13,7 +13,9 @@ dbuser: webcamp
 dbpassword: CHANGETHIS
 admin_email: someone@example.com
 
-static_sites: ['2015', '2014', '2013', '2012']
+static_sites: ['2014', '2013', '2012']
+
+current_year: 2015
 
 
 # ntp

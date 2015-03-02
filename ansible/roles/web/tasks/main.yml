@@ -11,4 +11,5 @@
     - restart nginx
 
 - include: static.yml tags=static
+- include: django.yml tags=django
 
