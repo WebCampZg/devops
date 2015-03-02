@@ -1,12 +1,15 @@
 ---
-- name: Checkout static for 2015 site
-  git: repo=https://github.com/WebCampZg/2015.static dest=/home/webcamp/web/2015 update=yes
+- name: Checkout static sites
+  git: repo=https://github.com/WebCampZg/{{ item }}.static dest=/home/webcamp/web/{{ item }} update=yes
+  with_items: static_sites
 
-- name: Copy over nginx vhos file for 2015
-  copy: src=2015.webcampzg.org_static dest=/etc/nginx/sites-available/2015.webcampzg.org
+- name: Copy over nginx vhost file for static sites
+  template: src=year.webcampzg.org_static dest=/etc/nginx/sites-available/{{ item }}.webcampzg.org
+  with_items: static_sites
 
-- name: Enable domain vhost 2015 file
-  file: src=/etc/nginx/sites-available/2015.webcampzg.org dest=/etc/nginx/sites-enabled/2015.webcampzg.org state=link
+- name: Enable domain vhost file for static sites
+  file: src=/etc/nginx/sites-available/{{ item }}.webcampzg.org dest=/etc/nginx/sites-enabled/{{ item }}.webcampzg.org state=link
+  with_items: static_sites
   notify:
     - restart nginx
 
