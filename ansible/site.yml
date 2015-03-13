@@ -13,8 +13,8 @@
     - vars/{{ 'testing' if testing is defined else 'user' }}.yml
   roles:
     # - { role: common, tags: ["common"] }
-    - { role: common, tags: ["common"] }
+    - { role: common, tags: ["common", "vagrant"] }
     - { role: nginx, tags: ["nginx"] }
-    - { role: postgres, tags: ["postgres"] }
+    - { role: postgres, tags: ["postgres", "vagrant"] }
     - { role: web, tags: ["web"] }
 

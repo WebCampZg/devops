@@ -1,0 +1,17 @@
+---
+- name: Create empty Virtualenv for vagrant
+  shell: virtualenv "/home/vagrant/env"
+  when: vagrantvm is defined
+
+- name: Install pip requirements in Vagrant VM
+  pip: >
+    virtualenv='/home/vagrant/env'
+    requirements='/home/vagrant/conference-web/requirements/dev.txt'
+  when: vagrantvm is defined
+
+- name: Run migrations on Vagrant
+  shell: >
+      chdir=/home/vagrant/conference-web
+      /home/vagrant/env/bin/python manage.py migrate --settings=project.settings.dev --noinput
+  when: vagrantvm is defined
+

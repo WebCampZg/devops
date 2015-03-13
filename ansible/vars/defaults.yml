@@ -10,7 +10,7 @@ friendly_networks:
 
 dbname: webcampdb
 dbuser: webcamp
-dbpassword: CHANGETHIS
+dbpassword: webcamp
 admin_email: someone@example.com
 
 static_sites: ['2014', '2013', '2012']
