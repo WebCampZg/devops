@@ -1,10 +1,4 @@
 ---
-- name: Install Pip
-  apt: pkg=python-pip state=installed
-
-- name: Install Virtualenv
-  apt: pkg=python-virtualenv state=installed
-
 - name: Create empty Virtualenv for dev
   shell: virtualenv "/home/webcamp/web/env"
 

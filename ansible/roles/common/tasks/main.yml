@@ -34,6 +34,8 @@
     - kexec-tools
     - python-passlib
     - util-linux
+    - python-pip
+    - python-virtualenv
 
 - name: Install PIL reqs
   apt: name={{ item }} state=installed
