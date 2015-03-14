@@ -2,5 +2,5 @@
 
 cd ansible
 
-ansible-playbook site.yml --tags=web
+ansible-playbook site.yml --tags=web --skip-tags=vagrant
 
