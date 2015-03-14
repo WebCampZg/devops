@@ -9,7 +9,7 @@
   hosts: all
   user: root
   vars_files:
-    - vars/user.yml
+    - vars/{{ 'vagrant' if vagrantvm is defined else 'user' }}.yml
   roles:
     - { role: common, tags: ["common", "vagrant"] }
     - { role: nginx, tags: ["nginx"] }
