@@ -1,0 +1,7 @@
+# WE OVERRIDE DEFAULTS HERE
+#
+# Make sure to change default sensitive info like
+# database passwords and such
+#
+# NEVER COMMIT CHANGES FROM THIS FILE TO REPO
+
