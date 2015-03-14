@@ -6,12 +6,16 @@
 - name: Install pip requirements in Vagrant VM
   pip: >
     virtualenv='/home/vagrant/env'
-    requirements='/home/vagrant/conference-web/requirements/dev.txt'
+    requirements='/home/vagrant/app/requirements/dev.txt'
+  when: vagrantvm is defined
+
+- name: Make sure hostname db points to localhost
+  lineinfile: dest=/etc/hosts line='127.0.0.1 db' owner=root group=root mode=0644
   when: vagrantvm is defined
 
 - name: Run migrations on Vagrant
   shell: >
-      chdir=/home/vagrant/conference-web
+      chdir=/home/vagrant/app
       /home/vagrant/env/bin/python manage.py migrate --settings=project.settings.dev --noinput
   when: vagrantvm is defined
 
