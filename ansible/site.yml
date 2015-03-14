@@ -9,7 +9,6 @@
   hosts: all
   user: root
   vars_files:
-    - vars/defaults.yml
     - vars/user.yml
   roles:
     - { role: common, tags: ["common", "vagrant"] }
