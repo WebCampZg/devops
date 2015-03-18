@@ -1,0 +1,5 @@
+ssl_key: /tmp/webcamp_certs/webcampzg.org.key
+ca: /tmp/webcamp_certs/ca.pem
+intermediate: /tmp/webcamp_certs/sub.class2.server.ca.pem
+ssl_cert: /tmp/webcamp_certs/webcampzg.org.crt
+

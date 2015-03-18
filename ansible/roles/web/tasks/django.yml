@@ -1,6 +1,10 @@
 ---
+- stat: path=/home/webcamp/web/env
+  register: env_dir
+
 - name: Create empty Virtualenv for dev
   shell: virtualenv "/home/webcamp/web/env"
+  when: env_dir.stat.exists == False
 
 - name: Checkout conference web
   git: repo=https://github.com/WebCampZg/conference-web dest=/home/webcamp/web/conference-web update=yes
@@ -15,16 +19,13 @@
       - restart conference-web
 
 - name: Copy over prod settings
-  template: src=prod.py dest=/home/webcamp/web/conference-web/project/settings/prod.py owner=webcamp group=webcamp
+  template: src=prod.py dest=/home/webcamp/web/conference-web/project/settings/local.py owner=webcamp group=webcamp
 
 - name: Make sure to create log dir
   file: path=/var/log/conference-web state=directory owner=webcamp group=webcamp
 
 - name: Copy over gunicorn config
   copy: src=gunicorn_config.py dest=/home/webcamp/web/conference-web owner=webcamp group=webcamp
-
-- name: Make sure everything in home dir has correct ownership
-  shell: chown webcamp /home/webcamp -R
 
 - name: Copy over upstart script
   template: src=conference-web.upstart dest=/etc/init/conference-web.conf
@@ -46,4 +47,7 @@
   file: src=/etc/nginx/sites-available/{{ current_year }}.webcampzg.org dest=/etc/nginx/sites-enabled/{{ current_year }}.webcampzg.org state=link
   notify:
     - restart nginx
+
+- name: Make sure everything in home dir has correct ownership
+  shell: chown webcamp /home/webcamp -R
 

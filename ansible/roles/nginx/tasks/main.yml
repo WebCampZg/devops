@@ -9,3 +9,29 @@
   notify:
     - restart nginx
 
+- name: Create certs directory
+  file: path='/home/webcamp/certs' state=directory owner=webcamp group=webcamp mode=770
+
+- name: Copy over ssl key
+  copy: src='{{ ssl_key }}' dest='/home/webcamp/certs/webcampzg.org.key'
+
+- name: Copy over ssl cert
+  copy: src='{{ ssl_cert }}' dest='/home/webcamp/certs/webcampzg.org.crt'
+
+- name: Copy over root cert
+  copy: src={{ ca }} dest='/home/webcamp/certs/ca.pem'
+
+- name: Copy over intermediate cert
+  copy: src={{ intermediate }} dest=/home/webcamp/certs/sub.class2.server.ca.pem
+
+
+- name: Make sure to bundle ssl certs
+  shell: cat /home/webcamp/certs/webcampzg.org.crt /home/webcamp/certs/sub.class2.server.ca.pem /home/webcamp/certs/ca.pem > /home/webcamp/certs/wc.webcampzg.org.crt.chain
+  notify:
+    - restart nginx
+
+- name: Make sure to chown/chmod certs folder correctly
+  shell: chown -R webcamp:www-data /home/webcamp/certs/  && chmod -R 740 /home/webcamp/certs/
+  notify:
+    - restart nginx
+
