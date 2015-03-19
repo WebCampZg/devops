@@ -1,3 +1,4 @@
 current_year: 2015
 static_sites: ['2014', '2013', '2012']
+mandrill_api_key: entermandrillapikeyhere
 
