@@ -19,6 +19,7 @@ INSTALLED_APPS += (
 )
 
 DEFAULT_FROM_EMAIL = 'info@webcampzg.org'
+SERVER_EMAIL = 'info@webcampzg.org'
 
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 MANDRILL_API_KEY = "{{ mandrill_api_key }}"
