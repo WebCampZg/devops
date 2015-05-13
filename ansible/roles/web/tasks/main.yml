@@ -3,7 +3,7 @@
   file: path=/home/webcamp/web state=directory owner=webcamp group=webcamp mode=0755
 
 - name: Copy over main nginx vhost file
-  copy: src=webcampzg.org dest=/etc/nginx/sites-available/webcampzg.org
+  template: src=webcampzg.org dest=/etc/nginx/sites-available/webcampzg.org
 
 - name: Enable main vhost file
   file: src=/etc/nginx/sites-available/webcampzg.org dest=/etc/nginx/sites-enabled/webcampzg.org state=link
