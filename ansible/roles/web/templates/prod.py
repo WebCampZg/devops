@@ -23,4 +23,4 @@ SERVER_EMAIL = 'info@webcampzg.org'
 
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 MANDRILL_API_KEY = "{{ mandrill_api_key }}"
-
+ENTRIO_API_KEY = "{{ entrio_api_key }}"
