@@ -20,6 +20,8 @@
 
 - name: Copy over prod settings
   template: src=prod.py dest=/home/webcamp/web/conference-web/project/settings/local.py owner=webcamp group=webcamp
+  notify:
+      - restart conference-web
 
 - name: Make sure to create log dir
   file: path=/var/log/conference-web state=directory owner=webcamp group=webcamp
