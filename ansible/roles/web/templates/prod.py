@@ -3,7 +3,7 @@ import dj_database_url
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['2015.webcampzg.org', '128.199.33.243']
+ALLOWED_HOSTS = ['2016.webcampzg.org', '128.199.33.243']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
