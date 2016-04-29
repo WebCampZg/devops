@@ -14,13 +14,18 @@ DATABASES = {'default': dj_database_url.config(
     default='postgres://{{ dbuser }}:{{ dbpassword }}@localhost:5432/{{ dbname }}'
 )}
 
-INSTALLED_APPS += (
-    'djrill',
-)
-
 DEFAULT_FROM_EMAIL = 'info@webcampzg.org'
 SERVER_EMAIL = 'info@webcampzg.org'
 
-EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
-MANDRILL_API_KEY = "{{ mandrill_api_key }}"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = '{{ sendgrid_username }}'
+EMAIL_HOST_PASSWORD = "{{ sendgrid_password }}"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+RAVEN_CONFIG = {
+    "dsn": "{{ raven_dsn }}"
+}
+
 ENTRIO_API_KEY = "{{ entrio_api_key }}"

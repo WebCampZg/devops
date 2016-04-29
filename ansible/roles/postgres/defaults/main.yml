@@ -1,4 +1,6 @@
 dbname: webcampdb
 dbuser: webcamp
 dbpassword: webcamp
-
+sendgrid_username: webcampzg
+sendgrid_password: webcampzg
+raven_dsn: null
