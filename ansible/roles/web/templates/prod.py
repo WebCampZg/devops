@@ -29,5 +29,3 @@ RAVEN_CONFIG = {
 }
 
 ENTRIO_API_KEY = "{{ entrio_api_key }}"
-
-VOTING_ENABLED = True
